@@ -1,0 +1,231 @@
+I found the following 6 errors:
+  1. isEmpty() always returns true.
+  2. addBack() adds to the front.
+  3. removeBack() doesn't remove anything.
+  4. removeFront() doesn't remove anything.
+  (Using compiler flags I found the following 2 memory leaks.)
+  5. Line 81 of LinkedListOfInts.cpp creates an int object but never deletes it.
+  6. Line 74 of LinkedListOfInts.cpp creates an int object but never deletes it.
+
+Below is the output from my ./prog.
+-----------------------------------
+Running isEmpty() test: 
+	 isEmpty should be true: Passed
+	 isEmpty should be false: Failed
+Vector: 5 
+
+Running size() test: 
+	 Size should be 0: Passed
+	 Size should be 1: Passed
+	 Size should be 2: Passed
+	 Size should be 3: Passed
+	 Size should be 4: Passed
+	 Size should be 5: Passed
+	 Size should be 6: Passed
+	 Size should be 7: Passed
+	 Size should be 8: Passed
+	 Size should be 9: Passed
+Vector: 9 8 7 6 5 4 3 2 1 0 
+
+Running search() test: 
+	 Searching for 0: Passed
+	 Searching for 1: Passed
+	 Searching for 2: Passed
+	 Searching for 3: Passed
+	 Searching for 4: Passed
+	 Searching for 5: Passed
+	 Searching for 6: Passed
+	 Searching for 7: Passed
+	 Searching for 8: Passed
+	 Searching for 9: Passed
+	 Searching for -1: Passed
+	 Searching for 15: Passed
+Vector: 9 8 7 6 5 4 3 2 1 0 
+
+Running addBack() test: 
+   Should be: Vector: 0 1 2 3 4 5 6 7 8 9 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+
+Running addFront() test: 
+   Should be: Vector: 9 8 7 6 5 4 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Passed
+
+Running removeBack() test: 
+   Should be: Vector: 9 8 7 6 5 4 3 2 1 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 7 6 5 4 3 2 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 7 6 5 4 3 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 7 6 5 4 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 7 6 5 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 7 6 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 7 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 8 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 9 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+
+Running removeFront() test: 
+   Should be: Vector: 8 7 6 5 4 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 7 6 5 4 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 6 5 4 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 5 4 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 4 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 3 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 2 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 1 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 0 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+   Should be: Vector: 
+Actual value: Vector: 9 8 7 6 5 4 3 2 1 0 
+	 Comparing values: Failed
+Running...
+And we're done.
+Goodbye.
+
+=================================================================
+==6080==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x401958 in TestLinkedList::testSize() (/home/j939v704/EECS448/eecs448-lab07/prog+0x401958)
+    #3 0x402c1f in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c1f)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x401b0b in TestLinkedList::testSearch() (/home/j939v704/EECS448/eecs448-lab07/prog+0x401b0b)
+    #3 0x402c3a in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c3a)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x4016f3 in TestLinkedList::testIsEmpty() (/home/j939v704/EECS448/eecs448-lab07/prog+0x4016f3)
+    #3 0x402c04 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c04)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x4024ba in TestLinkedList::testRemoveBack() (/home/j939v704/EECS448/eecs448-lab07/prog+0x4024ba)
+    #3 0x402c8b in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c8b)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x40215c in TestLinkedList::testAddFront() (/home/j939v704/EECS448/eecs448-lab07/prog+0x40215c)
+    #3 0x402c70 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c70)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x40555e in LinkedListOfInts::addBack(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:74
+    #3 0x401e32 in TestLinkedList::testAddBack() (/home/j939v704/EECS448/eecs448-lab07/prog+0x401e32)
+    #4 0x402c55 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c55)
+    #5 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #6 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x402852 in TestLinkedList::testRemoveFront() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402852)
+    #3 0x402ca6 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402ca6)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Indirect leak of 144 byte(s) in 9 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x401958 in TestLinkedList::testSize() (/home/j939v704/EECS448/eecs448-lab07/prog+0x401958)
+    #3 0x402c1f in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c1f)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Indirect leak of 144 byte(s) in 9 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x40215c in TestLinkedList::testAddFront() (/home/j939v704/EECS448/eecs448-lab07/prog+0x40215c)
+    #3 0x402c70 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c70)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Indirect leak of 144 byte(s) in 9 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x401b0b in TestLinkedList::testSearch() (/home/j939v704/EECS448/eecs448-lab07/prog+0x401b0b)
+    #3 0x402c3a in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c3a)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Indirect leak of 144 byte(s) in 9 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x40555e in LinkedListOfInts::addBack(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:74
+    #3 0x401e32 in TestLinkedList::testAddBack() (/home/j939v704/EECS448/eecs448-lab07/prog+0x401e32)
+    #4 0x402c55 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c55)
+    #5 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #6 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Indirect leak of 144 byte(s) in 9 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x4024ba in TestLinkedList::testRemoveBack() (/home/j939v704/EECS448/eecs448-lab07/prog+0x4024ba)
+    #3 0x402c8b in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402c8b)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+Indirect leak of 144 byte(s) in 9 object(s) allocated from:
+    #0 0x7f7c7a4a0532 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x99532)
+    #1 0x405587 in LinkedListOfInts::addFront(int) /home/jgibbons/public_html/eecs448/2016fall/lab06/LinkedListOfInts.cpp:81
+    #2 0x402852 in TestLinkedList::testRemoveFront() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402852)
+    #3 0x402ca6 in TestLinkedList::runTests() (/home/j939v704/EECS448/eecs448-lab07/prog+0x402ca6)
+    #4 0x401496 in main /home/j939v704/EECS448/eecs448-lab07/main.cpp:19
+    #5 0x7f7c79ac582f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+SUMMARY: AddressSanitizer: 976 byte(s) leaked in 61 allocation(s).
